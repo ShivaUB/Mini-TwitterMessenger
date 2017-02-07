@@ -1,0 +1,170 @@
+﻿ div.outer {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: #ffffff;
+            border: 2px solid #4CAF50;
+            color: green;
+            padding: 0px 20px;
+            width: 480px;
+            margin: auto;
+        }
+            div.outer .top {
+                margin: 0px -20px;
+                padding: 0px 20px;
+                background-color: #8AF;
+                color: #000;
+                width: 200px;
+            }
+
+        p {
+            display: inline;
+        }
+        tbody{
+    overflow-y:hidden;
+        }
+        label{
+            font-size:10px;
+            color:green;
+        }
+        img {
+    margin-bottom: -5px;
+    border-radius: 8px;
+}
+        .txtNum{
+            width:60px;
+            height:20px;
+            color:green;
+        }
+        table#Tweets {
+            border-collapse: separate;
+            border-spacing: 0 5px;
+        }
+        .wrap {
+        width: 100%;
+        overflow:hidden;
+        }
+
+        .fleft {
+            float:left; 
+            width: 25%;
+            background:white;
+            height: 1000px;
+            position:inherit;
+        }
+
+        .fright {
+            float: left;
+            background:white;
+            height: 100%;
+            width: 42%;
+            left:50px;
+        }
+        .fcorner{
+             float: left;
+            background:white;
+            height: 100%;
+            width: 33%;
+            top:50px;
+            left:70px;
+        }
+        #container{
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .box1 {
+          width:100%;
+          height:400px;
+          background:black;
+          }
+
+        .box2 {
+           position: absolute;
+            bottom: 117px;
+            left: 80px;
+            width: 200px;
+            height: 0px;
+          }
+
+        .box3 {
+          width:100%;
+          height:58px;
+          background:lightgrey;
+          }
+        .ComposeTweet{
+            position:relative;
+            left : 80px;
+            top:15px;   
+        } 
+        .TweetNum{
+        float:right;
+        }
+        .SearchTweet{
+            position:relative;
+            left : 90px;
+            top:15px;   
+        }
+        .icon_pic{
+             -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            width:48px;
+            height:48px;
+        }
+        .Tweets{
+             position:relative;
+            left : 30px;
+            top:10px;
+                    overflow: hidden;
+                    background-color: white;
+                    color: black;
+                    padding: 10px 5px;
+                    width: 500px;
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 3px 1px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; 
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button2 {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 1px 1px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 8px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; 
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        .button1 {
+            background-color: white; 
+            color: green; 
+            border: 2px solid #4CAF50;
+        }
+
+        .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .left{
+            position:relative;
+            left : 90px;
+            top:100px;
+            color:green
+     }

@@ -1,0 +1,186 @@
+﻿@model IEnumerable<TwitterWebApp.Models.ViewTweet>
+@using Tweetinvi.Models
+@using TwitterWebApp
+
+@{
+    ViewBag.Title = "PostTweets";
+}
+<head>
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link href="~/Scripts/Twitter.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+  $( function() {
+      $("tbody").sortable({containment:'parent',tolerance:'pointer',cursor:'pointer',revert:true,opacity:0.60});
+  });
+
+  $(document).ready(function () {
+      function deleteRow() {
+          var par = $(this).parent().parent();
+          par.remove();
+      };
+      $(".dlt").click(deleteRow);
+  });
+    </script>
+
+    <script type="text/javascript">
+        function deleteRow() {
+            var par = $(this).parent().parent();
+            par.remove();
+        };
+        function TwitterProp(evt, cityName) {
+            var i, x, tablinks;
+            x = 3;
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-border-green", "");
+            }
+            evt.currentTarget.firstElementChild.className += " w3-border-green";
+            window.location.replace("http://localhost:64790/Home/ViewTweets");
+        }
+        function setText(val, e) {
+            document.getElementById(e).value = val;
+        }
+
+        function requestPosition() {
+            var nav = null;
+            if (nav == null) {
+                nav = window.navigator;
+            }
+            if (nav != null) {
+                var geoloc = nav.geolocation;
+                if (geoloc != null) {
+                    geoloc.getCurrentPosition(successCallback);
+                }
+                else {
+                    alert("geolocation not supported");
+                }
+            }
+            else {
+                alert("Navigator not found");
+            }
+        }
+
+        function successCallback(position) {
+            setText(position.coords.latitude, "latitude");
+            setText(position.coords.longitude, "longitude");
+        }
+    </script>
+</head>
+<body onload="myFunction();">
+    @{
+        var userDetails = ViewData["USER"] as IUser;
+    }
+    <div id="container">
+        <div class="box1"><img src=@userDetails.ProfileBannerURL width="1349" height="400" alt=""></div>
+        <div class="box3">
+            <div class="w3-row">
+                <a href="javascript:void(0)" onclick="TwitterProp(event, 'Tweets');" style="position:relative;left:350px;top:-8px;float:left">
+                    <div class="w3-first tablink w3-bottombar w3-hover-light-grey w3-padding" style="color:green"><p style="font-size:11px">Tweets</p><br /><i class="fa fa-twitter"  aria-hidden="true"></i>@userDetails.StatusesCount </div>
+                </a>
+                <a href="javascript:void(0)" onclick="TwitterProp(event, 'Followers');" style="position:relative;left:375px;top:-8px;float:left">
+                    <div class="w3-first tablink w3-bottombar w3-hover-light-grey w3-padding" style="color:green"><p style="font-size:11px">Followers</p><br/>@userDetails.FollowersCount</div>
+                </a>
+                <a href="javascript:void(0)" onclick="TwitterProp(event, 'Likes');" style="position:relative;left:400px;top:-8px;float:left">
+                    <div class="w3-first tablink w3-bottombar w3-hover-light-grey w3-padding" style="color:green"><p style="font-size:11px">Likes</p><br/>@userDetails.FavouritesCount</div>
+                </a>
+            </div>
+        </div>
+        <div class="box2"><img src=@userDetails.ProfileImageUrl400x400 height="200" width="200" alt=""></div>
+    </div>
+    <div class="wrap">
+        <div class="fleft">
+            <div class="left">
+                <p> @userDetails.Name</p>
+                <br />
+                <p style="color:limegreen">@@@userDetails.ScreenName</p><br />
+                <i class="fa fa-calendar-o" aria-hidden="true"></i><p> joined on @userDetails.CreatedAt.Month / @userDetails.CreatedAt.Year</p><br />
+                <p> @userDetails.Description</p>
+            </div>
+        </div>
+        <div class="fright">
+            <div class="ComposeTweet">
+                    @if (ViewBag.PostTweetStatus != null)
+                    {
+                        <p style="color:red">@ViewBag.PostTweetStatus</p>
+                    }
+                @using (Html.BeginForm("PTweets", "Home"))
+                {
+
+                    @Html.TextArea("txtTweet", new { rows = "2", cols = "100" })
+                    <input class="button button1" type="submit" Value="Tweet Me!!!">
+                }
+            </div>
+            <hr />
+            <div class="Tweets">
+                <div class="TweetNum">
+                    @using (Html.BeginForm("NumTweets", "Home"))
+                     {
+                        <p style="font-size:8px"># of Tweets to see:</p>
+                        @Html.TextBox("txtNum", null, new { @class = "txtNum" });
+                        <input class="button2 button1" type="submit" value="Retrieve" />
+                    }
+                </div>
+                <table align="center" id="Tweets">
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="outer">
+                                        <br />
+                                        <p><img class="icon_pic" src=@item.ProfilePic alt="" width="48" height="48" /></p>
+                                        <p style=" color:green;"><strong>@Html.DisplayFor(modelItem => item.Name)</strong></p>
+                                        <p style=" color:greenyellow;font-style:italic"> @@@Html.DisplayFor(modelItem => item.ScreenName)</p>
+                                        <p style="align-content:center;color:black">  @Html.DisplayFor(modelItem => item.CreatedTime)</p><br />
+                                        @if (item.TweetText.Substring(0, 2) == "RT")
+                                        {
+                                            <i class="fa fa-retweet" aria-hidden="true" title="ReTweet"></i>
+                                            item.TweetText=item.TweetText.Remove(0, 2);
+                                            <h3 style="align-content:center;color:black">@Html.DisplayFor(modelItem => item.TweetText)</h3>
+                                        }
+                                        else
+                                        {
+                                            <h3 style="align-content:center;color:black">@Html.DisplayFor(modelItem => item.TweetText)</h3>
+                                        }
+                                        @if (item.Link != null)
+                                        {
+                                            <a href=@item.Link title="Click to open in a new window or tab" target=@item.Link><h3>@item.Link</h3></a>
+                                        }
+                                        @if (item.MMedia != null)
+                                        {
+                                            <img src=@item.MMedia alt="" style="width: 100%; top: -0px">
+                                        }
+                                        <a class="dlt" style="color: inherit;float: right;font-size: 10px;cursor: pointer;">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="fcorner">
+            <div class=" SearchTweet">
+                @using (Html.BeginForm("SearchTweets", "Home"))
+                {
+                    @Html.TextBox("txtSearchKey",null, new { Title = "Enter Full UserName" });
+                    <input class="button button1" type="submit" Value="Search" >
+                    <label onclick="requestPosition()">
+                    @Html.RadioButton("rdbSearchType", "By User",true) ByUser
+                    @Html.RadioButton("rdbSearchType", "By Keyword") ByKeyword
+                    @Html.RadioButton("rdbSearchType", "By Location") ByLocation(within 10 miles)
+                </label>
+                @*<label for="latitude">Latitude: </label><input id="latitude" /> <br />
+                <label for="longitude">Longitude: </label><input id="longitude" /> <br />
+                <input type="button" onclick="requestPosition()" value="Get Latitude and Longitude" />*@
+                <input type="hidden" id="latitude" name="Latitude"  /> 
+                <input type="hidden" id="longitude" name="Longitude" />
+                }
+            </div>
+        </div>
+    </div>
+</body>
